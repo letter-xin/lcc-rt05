@@ -1,0 +1,6 @@
+absco_size	wave_bb-wave_ee	delta:ils_step	x:absco_wave()	y:absco()
+wavesize	wave_bb-wave_ee	delta:resolution	x:wvnm()
+
+
+ils_size	ils_wave()	ils()	are all from the real ILSF
+	delta:ils_step	y:ils_spaced

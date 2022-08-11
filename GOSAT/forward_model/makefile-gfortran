@@ -1,0 +1,32 @@
+FC = gfortran
+
+### FLAGS ###
+SHAREDLIBFLAGS = -shared  -fPIC
+FC_FREEFORM = -ffree-form
+FC_CONVERT = -fconvert=little-endian
+
+FCFLAGS = $(FC_FREEFORM) $(FC_CHECKBOUNDS) $(FC_CONVERT) $(SHAREDLIBFLAGS) $(FC_STD) 
+LDFLAGS = -L/usr/lib/x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/4.6.3 -ldl -lgfortran
+INFLAGS = -I. 
+INFLAGS = -fbounds-check
+INFLAGS = -FR -w -cm -CB -traceback -g -assume byterecl
+
+#LDFLAGS =-r8 -assume byterecl
+
+EXE = emission
+
+OBJS  = commonData.o absc_kg_gen.o forward_calc.o create_emission.o
+
+
+all: $(EXE)
+
+$(EXE): $(OBJS)
+	$(FC) $(LDFLAGS) -o $(EXE) $(OBJS) -L /public/home/lcc-rt/opt/fftw/.libs/ -lfftw3 -lm
+
+%.o: $(SPATH)/%.f90
+	$(FC) $(FCFLAGS) -c $(SPATH)/$*.f90
+%.o: %.f90
+	$(FC) $(FCFLAGS) -c $*.f90
+
+clean:
+	-rm -f $(EXE) $(OBJS) *.mod *.o
